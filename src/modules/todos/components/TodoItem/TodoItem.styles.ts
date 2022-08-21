@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { getFromTheme } from "helpers/getFromTheme";
 
+export const DeleteTask = styled.span`
+  visibility: hidden;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+`;
+
 export const Container = styled.li`
   position: relative;
   display: flex;
@@ -9,10 +16,9 @@ export const Container = styled.li`
   height: 70px;
   padding: 0 ${({ theme }) => theme.spacing[1]};
   list-style-type: none;
-  :hover {
-    .delete-task {
-      opacity: 1;
-    }
+
+  &:hover > ${DeleteTask} {
+    visibility: visible;
   }
 `;
 
@@ -46,18 +52,31 @@ export const CheckBox = styled.input`
   }
 `;
 
-export const Description = styled.p`
+export const Description = styled.p<{ completed: boolean }>`
+  text-decoration: ${({ completed }) => (completed ? "line-through" : "none")};
+  filter: ${({ completed }) => (completed ? "brightness(2)" : "brightness(1)")};
   font-size: ${getFromTheme("fontSize", "medium")};
   color: ${getFromTheme("colors", "heading")};
   font-family: ${getFromTheme("fonts", "default")},
     ${getFromTheme("fonts", "fallback")};
 `;
 
-export const DeleteTask = styled.span`
-  opacity: 0;
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
+export const Input = styled.input`
+  height: 60px;
+  width: 100%;
+  padding-left: ${({ theme }) => theme.spacing[3]};
+  border: 0;
+  font-size: ${getFromTheme("fontSize", "medium")};
+  font-family: ${(getFromTheme("fonts", "default"),
+  getFromTheme("fonts", "fallback"))};
+  color: ${getFromTheme("colors", "heading")};
+  border-radius: ${getFromTheme("borderRadius")};
+  outline: 0;
 
-  transition: opacity ease 150ms;
+  &::placeholder {
+    font-size: ${getFromTheme("fontSize", "medium")};
+    color: ${getFromTheme("colors", "text")};
+    font-family: ${(getFromTheme("fonts", "default"),
+    getFromTheme("fonts", "fallback"))};
+  }
 `;
